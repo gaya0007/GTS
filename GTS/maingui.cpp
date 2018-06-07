@@ -50,6 +50,8 @@ MainTab::MainTab(QWidget *parent) : QWidget(parent)
     QLabel *lto = new QLabel(tr("to"));
     QLabel *tf = new QLabel(tr("Time Frame"));
 
+    btn_analyze = new QPushButton(tr("Analyze"));
+
     QVBoxLayout *vl = new QVBoxLayout;
 
     vl->addWidget(pair);
@@ -60,14 +62,23 @@ MainTab::MainTab(QWidget *parent) : QWidget(parent)
     vl->addWidget(to_date);
     vl->addWidget(tf);
     vl->addWidget(timeframes);
+    vl->addWidget(btn_analyze);
     vl->addStretch(1);
     setLayout(vl);
 
     connect(from_date, SIGNAL(dateChanged(const QDate &)), this, SLOT(fromDateChanged(const QDate &)));
+    connect(btn_analyze, &QPushButton::clicked, this, &MainTab::btn_click_analyze);
 }
 
 void MainTab::fromDateChanged(const QDate &date)
 {
     to_date->setMinimumDate(date);
     to_date->calendarWidget()->setMinimumDate(date);
+}
+
+void MainTab::btn_click_analyze()
+{
+    QString Data;
+    QByteArray data = "hello";
+    IPC::getInstance().SendData(data);
 }

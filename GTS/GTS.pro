@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui charts
+QT       += core gui charts network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         gts.cpp \
     maingui.cpp \
-    cscharts.cpp
+    cscharts.cpp \
+    ipc.cpp
 
 HEADERS += \
         gts.h \
     maingui.h \
-    cscharts.h
+    cscharts.h \
+    ipc.h
 
 FORMS += \
         gts.ui
