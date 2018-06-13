@@ -15,15 +15,14 @@ IPC::IPC(QWidget *parent):QDialog(parent)
 
 quint64 IPC::SendData(QByteArray Data)
 {
-    qDebug()<<Data;
-    return socket->writeDatagram(Data,QHostAddress::LocalHost,IPC_SOCK);
+    return socket->writeDatagram(Data,QHostAddress::LocalHost,5868);
 }
 
 void IPC::ReceiveData()
 {
 
     QByteArray Buffer;
-     Buffer.resize(socket->pendingDatagramSize());
+    Buffer.resize(socket->pendingDatagramSize());
 
     QHostAddress sender;
     quint16 senderPort;
