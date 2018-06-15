@@ -9,13 +9,13 @@ IPC& IPC::getInstance()
 IPC::IPC(QWidget *parent):QDialog(parent)
 {
     socket = new QUdpSocket(this);
-    socket->bind(QHostAddress::LocalHost,IPC_SOCK);
+    socket->bind(QHostAddress::LocalHost,IPC_RCV_SOCK);
     connect(socket,SIGNAL(readyRead()),this,SLOT(ReceiveData()));
 }
 
 quint64 IPC::SendData(QByteArray Data)
 {
-    return socket->writeDatagram(Data,QHostAddress::LocalHost,5868);
+    return socket->writeDatagram(Data,QHostAddress::LocalHost,IPC_SND_SOCK);
 }
 
 void IPC::ReceiveData()

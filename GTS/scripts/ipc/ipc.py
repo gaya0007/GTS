@@ -2,9 +2,9 @@ import socket
 import signal
 import threading
 import select
-from multiprocessing import Queue
+import queue
 
-UDP_PORT = 5868
+UDP_RCV_PORT = 5868
 UDP_IP = 'localhost'
 UDP_SND_PORT = 5867
 
@@ -19,11 +19,12 @@ class IPC(threading.Thread):
 		return IPC.__instance 
 		
 	def __init__(self, name, dqueue):
+		threading.Thread.__init__(self, name=name)
 		self.name = name
 		self.mdataqueue = dqueue
-		self.mqueue = Queue.Queue()
+		self.mqueue = queue.Queue()
 		rcv_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		rcv_socket.bind((UDP_IP, UDP_PORT))
+		rcv_socket.bind((UDP_IP, UDP_RCV_PORT))
 		rcv_socket.setblocking(0)
 		self.__instance = self
 		print("listening for IPC...")
@@ -37,7 +38,7 @@ class IPC(threading.Thread):
 						self.mdataqueue.put(data)
 					else:
 						try:
-							rcv_socket.sendto(self.mqueue.get(), (UDP_IP, UDP_SND_PORT))
+							rcv_socket.sendto(self.mqueue.get_nowait(), (UDP_IP, UDP_SND_PORT))
 						except Queue.Empty:	
 							pass
 					

@@ -1,5 +1,5 @@
 from datetime  import date, datetime
-from multiprocessing import Queue
+import queue
 #from price_handler import HistoricalPriceHandler
 from ipc.ipc import IPC
 from threading import Thread
@@ -10,16 +10,22 @@ import io
 import ipc
 
 
-	
-	
-if __name__ == '__main__':	
-	
-	m_que = Queue()
+def main():
+	m_que = queue.Queue()
 	ipc = IPC("IPC", m_que)
-	
 	while True:
 		try:
-			print(m_que.get())
-		except Queue.Empty:
+			print("read queue")
+			print(m_que.get_nowait())
+		except Empty:
 			pass
+			
+if __name__ == '__main__':	
+	
+	try:
+		main()
+	except KeyboardInterrupt:
+		print("Interrupted")
+		sys.exit(0)
+
  

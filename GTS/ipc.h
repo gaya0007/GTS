@@ -3,8 +3,8 @@
 #include <QDialog>
 #include <QUdpSocket>
 
-#define IPC_SOCK    5867
-
+#define IPC_RCV_SOCK    5867
+#define IPC_SND_SOCK    5868
 class IPC : public QDialog
 {
     Q_OBJECT
