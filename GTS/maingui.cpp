@@ -37,7 +37,7 @@ MainTab::MainTab(QWidget *parent) : QWidget(parent)
 {
     pairs = new QComboBox;
     timeframes = new QComboBox;
-    pairs->addItem(tr("EURUSD"));
+    pairs->addItem(tr("EUR_USD"));
     QStringList tfl = {tr("15M"),tr("30M"), tr("1H"), tr("4H"), tr("24H")};
     timeframes->addItems(tfl);
     from_date = new QDateEdit();
@@ -78,7 +78,13 @@ void MainTab::fromDateChanged(const QDate &date)
 
 void MainTab::btn_click_analyze()
 {
+    QByteArray parms;
+    parms.append(tr("ANALYZE;"));
+    parms.append(pairs->currentText().append(tr(";")));
+    parms.append(from_date->date().toString().append(tr(";")));
+    parms.append(to_date->date().toString().append(tr(";")));
+    parms.append(timeframes->currentText().append(tr(";")));
     QString Data;
-    QByteArray data = "hello";
-    IPC::getInstance().SendData(data);
+    Data.append(parms);
+    IPC::getInstance().SendData(parms);
 }

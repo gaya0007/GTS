@@ -66,4 +66,19 @@ class AdminEvent(Event):
 			str(self.type), str(self.instrument))
 
 	def __repr__(self):
-		return str(self)		
+		return str(self)
+
+class IPC_AnalyzeEvent(Event):
+	def __init__(self, type, instrument, from_date, to_date, timeframe):
+		self.type = type
+		self.instrument = instrument
+		self.timeframe = timeframe 
+		self.to_date = to_date
+		self.from_date = from_date
+
+	def __str__(self):
+		return "Type: %s, Instrument: %s timeframe: %s from date: %s to date: %s" (
+			str(self.type), str(self.instrument), str(self.timeframe), str(self.from_date), str(self.to_date))
+
+	def __repr__(self):
+		return str(self)

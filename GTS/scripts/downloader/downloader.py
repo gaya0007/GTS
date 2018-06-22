@@ -14,7 +14,10 @@ import datetime
 from requests import get
 from datetime import timedelta, date
 from threading import Thread
-from Queue import Queue
+try:
+	import Queue as queue
+except ImportError:
+	import queue
 import calendar
 
 logging.basicConfig(level=logging.DEBUG)
@@ -144,29 +147,29 @@ class DownloadMgr:
 		urls = self.prepare_download_urls(pair, from_date, to_date)
 		n_urls =  len(urls)
 		n_threads = min(4, n_urls)
-		queue = Queue()
+		mqueue = queue.Queue()
 		ret = []
 		
 		for thrd in range(n_threads):
-			logger.info("creading download thread %d", thrd) 
-			worker = Downloader(queue, ret)
+			logger.info("creating download thread %d", thrd) 
+			worker = Downloader(mqueue, ret)
 			# Setting daemon to True will let the main thread exit even though the workers are blocking
 			worker.daemon = True
 			worker.start()
 		
 		for url in urls:
 			ids = url.split('/')
-			path = '{}/{}/{}/{}/'.format(settings.CSV_DATA_DIR, pair, ids[3] , re.sub(r'\D', '',ids[4]) + '_' +  ids[5].translate(None, '.zip'))
-			file = path + ids[5].translate(None, '.zip') + '.pkl'
+			path = '{}/{}/{}/{}/'.format(settings.CSV_DATA_DIR, pair, ids[3] , re.sub(r'\D', '',ids[4]) + '_' +  ids[5].replace('.zip',''))
+			file = path + ids[5].replace('.zip','.pkl')
 			#TODO : check if the path exisists, if not download
 			if os.path.isfile(file):
-				logger.info("Data file %s exisists, download skipped.", file)
+				logger.info("Data file %s exists, download skipped.", file)
 				ret.append(file)
 			else:
 				logger.info("Adding url %s to download queue", url)
-				queue.put((path, url))
+				mqueue.put((path, url))
 			
-		queue.join()
+		mqueue.join()
 		return ret
 
 		
