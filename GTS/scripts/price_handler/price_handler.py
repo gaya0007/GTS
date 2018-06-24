@@ -10,16 +10,20 @@ class HistoricalPriceHandler():
 		self.pair = pair
 		self.dmgr = DownloadMgr()
 		self.df = pd.DataFrame()
-		
-	def get_df(self):
+		self.create_df()
+	
+	def create_df(self):
 		files = self.dmgr.download_historical_data(self.pair, self.start_date, self.end_date)
 		print(os.getcwd())
 		for file in files:
-			pd.read_pickle(file).head()
-			#self.df.append(pd.read_pickle(file))
-		print(self.df.head())	
+			print(os.path.join(file))
+			dft = pd.read_pickle(os.path.join(file))
+			self.df = self.df.append(dft)
 		return self.df
-		
+	
+	def get_df():
+		return self.df
+			
 	def stream_df(self):	
 		strat_date_ts = pd.Timestamp(self.start_date)
 		end_date_ts = pd.Timestamp(self.end_date)

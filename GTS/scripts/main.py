@@ -20,9 +20,10 @@ def run_analyze(instrument, to_date, from_date, timeframe):
 	end_date = datetime.strptime(from_date, '%a %b %d %Y').date()
 	phdl = HistoricalPriceHandler(instrument, strt_date, end_date)
 	df = phdl.get_df()
-	print(df.head())
 	dflist.append(phdl)
-	print("apended df")
+	
+	print(dflist)
+	pri
 
 def main():
 	m_que = queue.Queue()

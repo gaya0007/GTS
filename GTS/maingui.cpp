@@ -38,7 +38,7 @@ MainTab::MainTab(QWidget *parent) : QWidget(parent)
     pairs = new QComboBox;
     timeframes = new QComboBox;
     pairs->addItem(tr("EUR_USD"));
-    QStringList tfl = {tr("15M"),tr("30M"), tr("1H"), tr("4H"), tr("24H")};
+    QStringList tfl = {tr("15M"),tr("30M"), tr("1H"), tr("4H"), tr("1D")};
     timeframes->addItems(tfl);
     from_date = new QDateEdit();
     from_date->setCalendarPopup(true);
