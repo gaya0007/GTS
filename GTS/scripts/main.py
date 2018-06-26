@@ -11,6 +11,9 @@ import sys
 import json
 import io
 from datetime import timedelta, date
+from http.server import HTTPServer
+from web_server.web_server import Server_Thread
+
 
 dflist = []
 
@@ -23,29 +26,32 @@ def run_analyze(instrument, to_date, from_date, timeframe):
 	dflist.append(phdl)
 	
 	print(dflist)
-	pri
 
 def main():
 	m_que = queue.Queue()
-	ipc = IPC("IPC", m_que)
-	ipc.start()
+	#ipc = IPC("IPC", m_que)
+	#ipc.start()
+	
+	server =  Server_Thread("web server", m_que)
+	server.start()
 
 	while True:
 		try:
-			print("waiting for evt")
-			item = m_que.get()
+			item = m_que.get(timeout=1)
 			if item.type == 'ANALYZE':				
 				run_analyze(item.instrument, item.to_date, item.from_date, item.timeframe)
 
 		except queue.Empty:
 			pass
+		
+		except KeyboardInterrupt:
+			print("KeyboardInterrupt quit")
+			server.stop()
+			server.join()
+			sys.exit()
 			
 if __name__ == '__main__':	
-	
-	try:
-		main()
-	except KeyboardInterrupt:
-		print("Interrupted")
-		sys.exit(0)
+	main()
+
 
  
