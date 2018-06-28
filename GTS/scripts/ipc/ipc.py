@@ -8,6 +8,23 @@ except ImportError:
 	import queue
 from event.event import IPC_AnalyzeEvent
 
+def dummy(parms):
+	return 1
+
+def create_df(parms):
+	print("create_df")
+	return 
+	
+requests = {
+	'CREATE' 	: create_df,
+	'NONE'		: dummy
+}
+
+def handle_request(input):
+	cmd = input.get("cmd", "NONE")
+	print(cmd)
+	return requests[cmd](input)
+
 UDP_RCV_PORT = 5868
 UDP_IP = 'localhost'
 UDP_SND_PORT = 5867

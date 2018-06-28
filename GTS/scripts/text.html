@@ -3,17 +3,18 @@
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-<form action="" method="post" target="_parent">
-Pair:<br>
-<select name="pair">
-	<option value = "EUR_USD">EURUSD</option>
-</select>
-<br><br>
-Start Date:<br>
-<input type="date" name="start_date" min="2013-01-01"><br><br>
-End Date:<br>
-<input type="date" name="end_date" min="2013-01-02"><br><br>
-<button  type="submit" name = "analyze">Analyze</button> 
+<form name= "ANALYZE" action="" method="post" target="_parent">
+	<input name="cmd" type="hidden" value="CREATE">
+	Pair:<br>
+	<select name="pair">
+		<option value = "EUR_USD">EURUSD</option>
+	</select>
+	<br><br>
+	Start Date:<br>
+	<input type="date" name="start_date" min="2013-01-01"><br><br>
+	End Date:<br>
+	<input type="date" name="end_date" min="2013-01-02"><br><br>
+	<button  type="submit" name = "analyze">Analyze</button> 
 </form>
 
 <script>
@@ -35,11 +36,10 @@ End Date:<br>
 				alert("End date is not defined!");
 				return false;
 			}
-			$.post($(this).attr('action'), "ANALYSE&" + $(this).serialize(), function(response){
+			$.post($(this).attr('action'), $(this).serialize(), function(response){
             // do something here on success
 				console.log("here");
 			},'json');
-			console.log("here 1");
 			return false;
 		});
 	});
