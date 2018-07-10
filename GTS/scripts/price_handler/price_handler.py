@@ -21,7 +21,7 @@ class HistoricalPriceHandler():
 			self.df = self.df.append(dft)
 		return self.df
 	
-	def get_df():
+	def get_df(self):
 		return self.df
 			
 	def stream_df(self):	

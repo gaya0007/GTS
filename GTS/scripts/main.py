@@ -4,7 +4,7 @@ try:
 except ImportError:
 	import queue
 from price_handler.price_handler import HistoricalPriceHandler
-from ipc.ipc import IPC
+#from ipc.ipc import IPC
 from threading import Thread
 import socket
 import sys
@@ -15,17 +15,17 @@ from http.server import HTTPServer
 from web_server.web_server import Server_Thread
 
 
-dflist = []
+#dflist = []
 
-def run_analyze(instrument, to_date, from_date, timeframe):
-	strt_date = datetime.strptime(to_date, '%a %b %d %Y').date()
-	print(strt_date)
-	end_date = datetime.strptime(from_date, '%a %b %d %Y').date()
-	phdl = HistoricalPriceHandler(instrument, strt_date, end_date)
-	df = phdl.get_df()
-	dflist.append(phdl)
-	
-	print(dflist)
+#def run_analyze(instrument, to_date, from_date, timeframe):
+#	strt_date = datetime.strptime(to_date, '%a %b %d %Y').date()
+#	print(strt_date)
+#	end_date = datetime.strptime(from_date, '%a %b %d %Y').date()
+#	phdl = HistoricalPriceHandler(instrument, strt_date, end_date)
+#	df = phdl.get_df()
+#	dflist.append(phdl)
+#	
+#	print(dflist)
 
 def main():
 	m_que = queue.Queue()
@@ -38,8 +38,9 @@ def main():
 	while True:
 		try:
 			item = m_que.get(timeout=1)
-			if item.type == 'ANALYZE':				
-				run_analyze(item.instrument, item.to_date, item.from_date, item.timeframe)
+			pass
+			#if item.type == 'ANALYZE':				
+				#run_analyze(item.instrument, item.to_date, item.from_date, item.timeframe)
 
 		except queue.Empty:
 			pass

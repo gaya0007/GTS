@@ -95,7 +95,7 @@ class Downloader(Thread):
 							if os.path.isfile(file):
 								logger.info("Extracting files %s", file)
 								self.read_csv_and_pickle(file)
-								self.ret.append(file)
+								self.ret.append(file.replace('.csv', '.pkl'))
 								logger.info("Signalling Task Done.")
 								self.queue.task_done()
 							else:

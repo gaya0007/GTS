@@ -35,7 +35,7 @@ def make_request_handler_class(mq):
 				print(postvars)
 			elif ctype == 'application/x-www-form-urlencoded':
 				length = int(self.headers.get('content-length'))
-				postvars = parse_qs(self.rfile.read(length), keep_blank_values=1)
+				postvars = parse_qs(self.rfile.read(length).decode("utf-8"), keep_blank_values=1)
 				print(postvars)				
 			else:
 				postvars = {}
