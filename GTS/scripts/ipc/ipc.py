@@ -19,12 +19,12 @@ def create_df(parms):
 	to_date = parms.get("end_date", "NONE")
 	from_date = parms.get("start_date", "NONE")
 	instrument = parms.get("pair", "NONE")
+	timeframe = parms.get("timeframe", "NONE")
 	strt_date = datetime.strptime(to_date[0], '%Y-%m-%d').date()
 	print(strt_date)
 	end_date = datetime.strptime(from_date[0], '%Y-%m-%d').date()
 	phdl = HistoricalPriceHandler(instrument[0], strt_date, end_date)
-
-	df = phdl.get_df()
+	df = phdl.get_df().resample(timeframe[0]).ohlc().dropna().to_csv("data.csv")
 	dflist.append(phdl)
 	
 requests = {
